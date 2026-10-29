@@ -1,35 +1,20 @@
 # 科研 Skills 整合包
 
-> **当前版本待修订：** 调研和系统综述包含精简内容，AERS 仅为轻量指导，不包含原始资料库和路由能力。请暂时不要把本仓库当作原有技能的完整版本安装；完整版正在整理。
+适用于 Codex，面向管理学、组织行为学、心理学、教育学科研：深度调研、论文精读、系统文献综述、学术表达及实证研究。保留原技能的配套资料和脚本；AERS 通过单独安装的完整上游资料库按需路由，不预装统计软件。详细来源和许可见 [SOURCES.md](SOURCES.md)。
 
-面向管理学、组织行为、心理学和教育学研究，供 Codex 按任务调用：多来源调研、论文精读、文献综述、写作优化、实证研究协作。每个目录是独立技能，可以单独安装。技能提供工作方法，不替代研究判断、实际文献查证或统计软件。
+## 让 Codex 安装
 
-## 让 Codex 自动安装
+把本仓库链接发给 Codex，并说：“请安装这个仓库的全部科研 skills 和完整 AERS 资料库，按 README 执行并验证。”安装适用于 Mac 和 Windows；遵守当前网络和文件权限。
 
-将仓库链接发给 Codex，并告诉它“请安装这个仓库里的全部科研 skills”。Codex 可以读取本 README 并完成安装。
+给 Codex 的步骤：
 
-给 Codex 的安装指引：使用可用的 skill-installer，从 `Roxxxxxxy-yyy/research-skills-pack` 的 `main` 分支安装以下五个独立技能目录到当前用户的 Codex skills 目录：
+1. 使用现有 skill-installer 将 `skills/active-research`、`skills/paper-deep-reading`、`skills/systematic-literature-review`、`skills/anti-defensive-writing`、`skills/auto-empirical-research-skills` 五个目录完整安装到当前用户 Codex skills 目录（默认 `~/.codex/skills`，若设置 CODEX_HOME 则为 `$CODEX_HOME/skills`）。保留 scripts、references、模板、示例和各自的 LICENSE。已有同名技能不得静默覆盖：先检查并说明冲突，询问是否替换，其他未冲突技能可继续安装。
+2. 将 [完整 AERS 上游仓库](https://github.com/brycewang-stanford/Auto-Empirical-Research-Skills) 安装到 `${CODEX_HOME:-$HOME/.codex}/aers-library-371a40e`（Windows 在当前用户的 Codex home 下）。克隆后检出 `371a40e488c5d9e8e75ca2af5dd9667f8349c199`，再运行 `git submodule update --init --recursive`，并核对子模块状态及 `catalog/skills.json`、`scripts/find-skill.py` 和 `skills/`。该目录必须在 Codex skills 扫描目录之外。若目标已存在，检查来源和版本，勿覆盖或重置用户已有修改；也可用 `AERS_LIBRARY_ROOT` 指向已有兼容副本。克隆或子模块失败要如实报告，不得声称 AERS 安装完成。
+3. 使用可用 Python 运行已安装路由技能的 `scripts/research-route.py "实验设计 randomized experiment"`，确认返回的路径存在且属于安装的资料库；再用一个问卷或文献任务检查。网络、Git、Python 不可用或路径验证失败时报告具体限制。新建 Codex 会话后，请用户用 `$auto-empirical-research-skills` 测试一次；文件安装和路由脚本验证不代表各子技能的统计模型已运行。
+4. 文献综述的 Python 脚本依赖见其 `requirements.txt`。根据具体任务检查 Python 和依赖；需要时安装到该技能的 `.python-deps`（例如 `python -m pip install --target <该技能目录>/.python-deps -r <该技能目录>/requirements.txt`），不得从别的电脑复制平台相关依赖。先检查脚本再运行，不自动安装统计软件。仅阅读或指导任务不必预装全部依赖。
 
-- `skills/active-research`
-- `skills/paper-deep-reading`
-- `skills/systematic-literature-review`
-- `skills/anti-defensive-writing`
-- `skills/auto-empirical-research-skills`
+## 使用
 
-将每个目录完整安装，保留其 references 和 LICENSE；不要只复制 SKILL.md。遵守当前网络和文件权限；如果已有同名技能，不覆盖，列出冲突并安装其余技能。安装完成后告知结果，建议新建会话后尝试调用。联网失败时报告具体问题。此包是五个独立技能，不需要安装整套上游 AERS 或运行仓库中的安装脚本。
+新建会话，直接说“用论文精读技能分析这篇论文”，或“使用 AERS 选择适合这个问卷研究的方法”。Codex 可依据任务选择技能；也可以显式指定 `$paper-deep-reading`、`$systematic-literature-review` 或 `$auto-empirical-research-skills`。
 
-## 手动安装
-
-下载本仓库，将 `skills` 下想用的技能文件夹复制到 Codex 用户技能目录 `~/.codex/skills/`（Windows 通常为 `C:\Users\你的用户名\.codex\skills\`）；文件夹内应直接包含 `SKILL.md`。重启 Codex 或新建会话后使用。已有同名技能时先备份并检查，避免覆盖自己的版本。
-
-## 使用示例
-
-- “用 active-research 梳理组织认同的近期研究，列出来源和证据边界。”
-- “用 paper-deep-reading 精读这篇论文，区分作者结论和你的评价。”
-- “用 systematic-literature-review 制定检索策略并记录筛选过程。”
-- “用 anti-defensive-writing 润色这段讨论，保留结果和必要限定。”
-- “用 auto-empirical-research-skills 帮我检查这项问卷研究的设计和分析计划。”
-
-联网能力、全文访问和软件是否可用取决于实际环境；请核查 AI 生成的引用和结果。实证技能是轻量指导，不包含完整 AERS 库，也不自带 SPSS、R 或统计依赖。
-
-各组件来源、修改和许可见 [SOURCES.md](SOURCES.md)。
+文献检索、全文获取与统计软件取决于实际网络、授权和本机环境。核验 AI 引用与研究结论；不上传未经允许的未公开数据。上游资料库各子合集的许可和依赖可能不同，应按实际使用的技能核查。
